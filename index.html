@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Sebastatsi Experience: A School Without Borders</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Minimalist interactive map fallback (used only when no Google Maps API key is configured) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Top Minimal Bar -->
+  <header class="top-chrome">
+    <div class="brand-mark">
+      <img src="d17c7285-9204-4836-a986-237a82ec4c3d.png" alt="Mkhitar Sebastatsi Educational Complex" />
+    </div>
+
+    <div class="top-controls">
+      <div class="slide-counter" id="slideCounter" aria-live="polite">
+        <span class="counter-current">01</span>
+        <span class="counter-sep">/</span>
+        <span class="counter-total">05</span>
+      </div>
+      <button class="icon-btn" id="fullscreenBtn" title="Fullscreen (F)" aria-label="Toggle Fullscreen">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Presentation Stage -->
+  <main class="deck-stage" id="deckStage">
+
+    <!-- =========================================================
+         SLIDE 1: MINIMALIST HERO / TITLE
+         ========================================================= -->
+    <section class="slide active" data-slide="0" data-max-step="0" data-step="0">
+      <div class="slide-1-grid">
+        <div class="hero-content">
+          <h1 class="hero-title animate-in" style="--delay: 0.06s">
+            The Sebastatsi Experience:<br />
+            <span class="hero-title-accent">A School Without Borders</span>
+          </h1>
+
+          <p class="hero-subtitle animate-in" style="--delay: 0.16s">
+            What ideas can we offer to schools abroad?
+          </p>
+
+          <div class="hero-rule animate-in" style="--delay: 0.24s"></div>
+
+          <div class="authors-block animate-in" style="--delay: 0.3s">
+            <span class="authors-label">Presented by</span>
+            <p class="authors-line">
+              <span>Ruslan Hovsepyan</span>
+              <span class="sep">&middot;</span>
+              <span>Samvel Markosyan</span>
+              <span class="sep">&middot;</span>
+              <span>Davit Mirakyan</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="hero-visual animate-in" style="--delay: 0.18s">
+          <div class="hero-emblem-card">
+            <svg class="hero-rings" viewBox="0 0 380 380" aria-hidden="true">
+              <circle cx="190" cy="190" r="162" fill="none" stroke="#3B694C" stroke-opacity="0.16" stroke-width="1" stroke-dasharray="4 8" class="spin-slow" />
+              <circle cx="190" cy="190" r="122" fill="none" stroke="#6E3A24" stroke-opacity="0.18" stroke-width="1" />
+            </svg>
+            <div class="hero-logo-box">
+              <img src="d17c7285-9204-4836-a986-237a82ec4c3d.png" alt="Mkhitar Sebastatsi Logo" />
+            </div>
+            <span class="hero-origin">Yerevan &bull; Armenia</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SLIDE 2: FIRST IDEA. OUR ECOSYSTEM (REAL INTERACTIVE MAP!)
+         Beats:
+           0 -> Malatia-Sebastia, Yerevan: Main School (25 Babajanyan St)
+           1 -> All 6 Institutions appear at exact GPS coordinates + connect
+           2 -> Camera smoothly zooms out to Armenia (Artanish & Arates)
+         ========================================================= -->
+    <section class="slide" data-slide="1" data-max-step="2" data-step="0">
+      <div class="slide-header-row">
+        <div>
+          <span class="section-index">01</span>
+          <h2 class="slide-title">First Idea. Our Ecosystem</h2>
+        </div>
+      </div>
+
+      <div class="slide-2-layout">
+        <!-- Left: Real Interactive Map Stage (Google Maps JS API + Instant Real-Map Fallback) -->
+        <div class="map-stage-card">
+          <div id="ecosystemMap" class="real-map-canvas" aria-label="Interactive Map of Mkhitar Sebastatsi Ecosystem"></div>
+
+          <!-- Subtle Google Maps Key Config Trigger (bottom-right, unobtrusive) -->
+          <button class="map-key-btn" id="openGmapsModalBtn" type="button" title="Configure Google Maps API / Demo Key">
+            <span class="map-engine-dot" id="mapEngineDot"></span>
+            <span id="mapEngineLabel">Google Maps Key</span>
+          </button>
+        </div>
+
+        <!-- Right: Clean Minimalist Ecosystem Summary -->
+        <div class="ecosystem-sidebar">
+          <div class="eco-block eco-primary-card">
+            <div class="eco-stat-row">
+              <span class="eco-big-num">6</span>
+              <div>
+                <h3>Educational Institutions</h3>
+                <p>One connected neighborhood campus in Yerevan.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="eco-list">
+            <div class="eco-row">
+              <span class="eco-row-num">4</span>
+              <div>
+                <strong>Primary Schools</strong>
+                <span>Grades 1–6 &middot; North, South, East &amp; West</span>
+              </div>
+            </div>
+            <div class="eco-row">
+              <span class="eco-row-num">1</span>
+              <div>
+                <strong>Main School</strong>
+                <span>Middle &amp; High School &middot; Grades 7–12</span>
+              </div>
+            </div>
+            <div class="eco-row eco-row-college">
+              <span class="eco-row-num">1</span>
+              <div>
+                <strong>Multidisciplinary College</strong>
+                <span>Andranik St &middot; Craft, wine, media &amp; tech</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="eco-block eco-camps-card">
+            <div class="eco-stat-row">
+              <span class="eco-big-num">2</span>
+              <div>
+                <h3>Off-Campus Camps</h3>
+                <p><strong>Artanish</strong> (Lake Sevan) &amp; <strong>Arates</strong> (Highlands)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SLIDE 3: FIRST IDEA. OUR ECOSYSTEM — THE INSTITUTIONS TRULY INTERACT
+         Beats:
+           0 -> Clean overview of all 5 photos + interaction highlights
+           1 -> Spotlight: College Wine Brand & Arates Honey
+           2 -> Spotlight: Technolab & Media Lab
+           3 -> Spotlight: Inter-school collaboration message
+         ========================================================= -->
+    <section class="slide" data-slide="2" data-max-step="3" data-step="0">
+      <div class="slide-header-row">
+        <div>
+          <span class="section-index">01</span>
+          <h2 class="slide-title">First Idea. Our Ecosystem</h2>
+          <p class="slide-subtitle">The Institutions Truly Interact</p>
+        </div>
+      </div>
+
+      <div class="slide-3-layout">
+        <!-- Left: Generous 5-Photo Editorial Grid -->
+        <div class="eco-photo-grid">
+          <figure class="eco-photo photo-wine" data-group="craft" data-lightbox-src="35280ab5-93f7-41bb-8a4a-2f6e0e5ef4e6.jpg" data-lightbox-caption="College Winery — Students create and bottle their own wine brand">
+            <img src="35280ab5-93f7-41bb-8a4a-2f6e0e5ef4e6.jpg" alt="College Wine Brand" />
+            <figcaption>Own Wine Brand &middot; College</figcaption>
+          </figure>
+
+          <figure class="eco-photo photo-honey" data-group="craft" data-lightbox-src="01981acd-9eab-4bbf-8cd6-e4195df59d13.jpg" data-lightbox-caption="Arates Apiary — Students of all ages produce natural mountain honey">
+            <img src="01981acd-9eab-4bbf-8cd6-e4195df59d13.jpg" alt="Students making honey in Arates" />
+            <figcaption>Honey Production &middot; Arates</figcaption>
+          </figure>
+
+          <figure class="eco-photo photo-tech" data-group="tech" data-lightbox-src="df1f6314-d1cc-41c9-bb07-5797d8825b11.jpg" data-lightbox-caption="Technolab — Building scientific devices and tools for the school ecosystem">
+            <img src="df1f6314-d1cc-41c9-bb07-5797d8825b11.jpg" alt="Technolab engineering" />
+            <figcaption>Technolab Devices</figcaption>
+          </figure>
+
+          <figure class="eco-photo photo-workshop" data-group="tech" data-lightbox-src="9bfa05cc-b648-40c1-be6c-291c242f3f23.jpg" data-lightbox-caption="Workshop — Crafting real furniture and items for campus needs">
+            <img src="9bfa05cc-b648-40c1-be6c-291c242f3f23.jpg" alt="Technolab Workshop" />
+            <figcaption>Ecosystem Workshop</figcaption>
+          </figure>
+
+          <figure class="eco-photo photo-media" data-group="tech" data-lightbox-src="fafdb54a-cbd7-4edd-ad29-5705b60f499c.jpg" data-lightbox-caption="Media Lab — Documenting and sharing school projects">
+            <img src="fafdb54a-cbd7-4edd-ad29-5705b60f499c.jpg" alt="Media Lab team" />
+            <figcaption>Media Lab &amp; More</figcaption>
+          </figure>
+        </div>
+
+        <!-- Right: Clean, Airy 3-Part Story Column (Zero Clutter) -->
+        <div class="eco-story-col">
+          <div class="story-block block-craft">
+            <span class="story-num">01</span>
+            <h4>Craft &amp; Nature Together</h4>
+            <p>College students develop our own <strong>wine brand</strong>, while students of <strong>all ages</strong> harvest honey together in Arates.</p>
+          </div>
+
+          <div class="story-block block-tech">
+            <span class="story-num">02</span>
+            <h4>Built by Technolab</h4>
+            <p><strong>Technolab</strong> creates real devices, equipment, and furniture for the entire ecosystem — alongside our Media Lab and much more.</p>
+          </div>
+
+          <div class="story-takeaway">
+            <span class="takeaway-label">Idea for Schools Abroad</span>
+            <p>Not every school can sustain such an ecosystem alone — that is why <strong>collaborating with other schools</strong> is essential.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SLIDE 4: RESEARCH WORKS & PROJECTS (UNCROPPED, CLEAR PHOTOS!)
+         Beats:
+           0 -> Clean overview
+           1 -> Spotlight: Practical Projects (Grades 1–9 + full landscape photo)
+           2 -> Spotlight: Research Works (High School & College + full portrait photo)
+           3 -> Real-world fieldwork, scientists & specialist review strip
+         ========================================================= -->
+    <section class="slide" data-slide="3" data-max-step="3" data-step="0">
+      <div class="slide-header-row">
+        <div>
+          <span class="section-index">02</span>
+          <h2 class="slide-title">Research Works &amp; Projects</h2>
+        </div>
+      </div>
+
+      <div class="slide-4-layout">
+        <div class="rp-split">
+          <!-- LEFT: PRACTICAL PROJECTS (Landscape Photo Uncropped!) -->
+          <article class="rp-panel rp-projects">
+            <div class="rp-text">
+              <span class="rp-eyebrow">Mandatory &middot; Below Grade 10</span>
+              <h3>Practical Projects</h3>
+              <p>Hands-on work focused on building devices, harvesting honey, running lab experiments, and creating real solutions.</p>
+            </div>
+            <figure class="rp-img-landscape" data-lightbox-src="0dab5d69-a41a-4dda-81f1-fe7f12ffda85.jpg" data-lightbox-caption="Student presenting a hands-on 3D engineering project">
+              <img src="0dab5d69-a41a-4dda-81f1-fe7f12ffda85.jpg" alt="Student presenting practical project" />
+            </figure>
+          </article>
+
+          <!-- RIGHT: RESEARCH WORKS (Portrait Photo Uncropped Side-by-Side!) -->
+          <article class="rp-panel rp-research">
+            <div class="rp-research-inner">
+              <div class="rp-text">
+                <span class="rp-eyebrow eyebrow-chestnut">Mandatory &middot; High School &amp; College</span>
+                <h3>Research Works</h3>
+                <p>Deep theoretical investigation that can also include practical project components, defended before peers and mentors.</p>
+              </div>
+              <figure class="rp-img-portrait" data-lightbox-src="46c38576-a5cd-4f59-89c2-cbf199a0369d.png" data-lightbox-caption="High school student defending formal research work">
+                <img src="46c38576-a5cd-4f59-89c2-cbf199a0369d.png" alt="Senior student presenting research work" />
+              </figure>
+            </div>
+          </article>
+        </div>
+
+        <!-- Clean Minimal Bottom Pathway -->
+        <div class="rp-field-bar">
+          <div class="field-item">
+            <span class="field-num">01</span>
+            <div>
+              <strong>Explore Armenia</strong>
+              <span>Researching historical sites firsthand</span>
+            </div>
+          </div>
+          <div class="field-divider"></div>
+          <div class="field-item">
+            <span class="field-num">02</span>
+            <div>
+              <strong>Meet Scientists</strong>
+              <span>Direct dialogue with real researchers</span>
+            </div>
+          </div>
+          <div class="field-divider"></div>
+          <div class="field-item field-item-accent">
+            <span class="field-num">03</span>
+            <div>
+              <strong>Specialist Review</strong>
+              <span>External experts evaluate student work</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SLIDE 5: ADVENTURES & CAMPS (MINIMALIST ARMENIA ARROWS MAP!)
+         Beats:
+           0 -> Armenia map with arrows radiating from Our School
+           1 -> 40 km Hiking + Historical & Cultural Armenia
+           2 -> Technocamp in Arates + 3-Day Journeys
+           3 -> Clean closing signature
+         ========================================================= -->
+    <section class="slide" data-slide="4" data-max-step="3" data-step="0">
+      <div class="slide-header-row">
+        <div>
+          <span class="section-index">03</span>
+          <h2 class="slide-title">Adventures &amp; Camps</h2>
+        </div>
+        <div class="hiking-metric">
+          <span class="hiking-val" id="hikingCounter">40</span>
+          <span class="hiking-unit">km</span>
+          <span class="hiking-label">mandatory hiking</span>
+        </div>
+      </div>
+
+      <div class="slide-5-layout">
+        <!-- Left: Minimalist Armenia Map with Radiating Arrows -->
+        <div class="expedition-map-card">
+          <svg viewBox="0 0 540 470" class="interactive-svg" role="img" aria-label="Journeys radiating from our school across Armenia">
+            <defs>
+              <marker id="expArrow" viewBox="0 0 12 12" refX="8" refY="6" markerWidth="6.5" markerHeight="6.5" orient="auto">
+                <path d="M1,2 L10,6 L1,10 L3.2,6 Z" fill="#6E3A24" />
+              </marker>
+            </defs>
+
+            <g fill="none" stroke="#3B694C" stroke-opacity="0.12" stroke-width="1">
+              <circle cx="211" cy="222" r="82" stroke-dasharray="4 6" />
+              <circle cx="211" cy="222" r="162" stroke-dasharray="4 8" />
+            </g>
+
+            <g transform="translate(35, 8)">
+              <!-- Armenia Landmass -->
+              <path
+                d="M56,74 L105,65 L155,60 L222,45 L250,60 L296,100 L293,146 L357,202 L340,258 L412,293 L439,355 L417,413 L370,404 L365,343 L330,316 L299,304 L254,282 L219,279 L180,237 L126,225 L77,215 L76,156 L61,115 Z"
+                fill="#C7DAC7" stroke="#3B694C" stroke-width="2" stroke-linejoin="round" />
+
+              <!-- Lake Sevan -->
+              <path
+                d="M238,155 C254,148 270,154 278,170 C292,174 312,182 323,211 C310,224 288,224 276,214 C266,204 266,188 261,176 C250,174 240,168 238,155 Z"
+                fill="#7AA896" stroke="#3B694C" stroke-width="1.2" />
+
+              <!-- Radiating Arrows from Our School (Yerevan) -->
+              <g class="expedition-arrows" fill="none" stroke-linecap="round">
+                <path class="exp-ray" style="--ray-delay: 0.1s" d="M176,214 Q130,172 103,124" stroke="#6E3A24" stroke-width="2.2" marker-end="url(#expArrow)" />
+                <path class="exp-ray" style="--ray-delay: 0.22s" d="M176,214 Q182,140 201,78" stroke="#6E3A24" stroke-width="2.2" marker-end="url(#expArrow)" />
+                <path class="exp-ray" style="--ray-delay: 0.34s" d="M176,214 Q212,150 256,112" stroke="#6E3A24" stroke-width="2.2" marker-end="url(#expArrow)" />
+                <path class="exp-ray" style="--ray-delay: 0.46s" d="M176,214 Q226,174 276,161" stroke="#6E3A24" stroke-width="2.4" marker-end="url(#expArrow)" />
+                <path class="exp-ray" style="--ray-delay: 0.58s" d="M176,214 Q222,248 262,258" stroke="#6E3A24" stroke-width="3" marker-end="url(#expArrow)" />
+                <path class="exp-ray" style="--ray-delay: 0.7s" d="M176,214 Q298,254 392,326" stroke="#6E3A24" stroke-width="2.2" marker-end="url(#expArrow)" />
+                <path class="exp-ray" style="--ray-delay: 0.82s" d="M176,214 Q282,326 394,400" stroke="#6E3A24" stroke-width="2.2" marker-end="url(#expArrow)" />
+              </g>
+
+              <!-- Destination Labels -->
+              <g class="dest-labels" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700" fill="#1A3526">
+                <circle cx="101" cy="120" r="3.5" fill="#1A3526" />
+                <text class="map-halo-light" x="94" y="109" text-anchor="middle">Gyumri</text>
+
+                <circle cx="202" cy="73" r="3.5" fill="#1A3526" />
+                <text class="map-halo-light" x="202" y="61" text-anchor="middle">Lori</text>
+
+                <circle cx="260" cy="108" r="3.5" fill="#1A3526" />
+                <text class="map-halo-light" x="255" y="96" text-anchor="middle">Tavush</text>
+
+                <circle cx="280" cy="158" r="4" fill="#1A3526" />
+                <text class="map-halo-light" x="304" y="150" text-anchor="start">Artanish</text>
+
+                <!-- Arates Special Marker -->
+                <g transform="translate(266, 258)">
+                  <circle r="15" fill="#6E3A24" fill-opacity="0.18" class="pulse-ring" />
+                  <circle r="6" fill="#6E3A24" stroke="#F7F0DC" stroke-width="2" />
+                  <rect x="-106" y="16" width="98" height="22" rx="11" fill="#6E3A24" />
+                  <text x="-57" y="31" text-anchor="middle" fill="#FAF5E6" font-size="10" font-weight="700">Arates Camp</text>
+                </g>
+
+                <circle cx="396" cy="328" r="3.5" fill="#1A3526" />
+                <text class="map-halo-light" x="394" y="346" text-anchor="middle">Tatev</text>
+
+                <circle cx="397" cy="404" r="3.5" fill="#1A3526" />
+                <text class="map-halo-light" x="358" y="408" text-anchor="end">Meghri</text>
+              </g>
+
+              <!-- Our School Origin -->
+              <g transform="translate(176, 214)">
+                <circle r="22" fill="#3B694C" fill-opacity="0.18" class="pulse-ring" />
+                <circle r="10" fill="#1A3526" stroke="#F7F0DC" stroke-width="3" />
+                <g transform="translate(-72, 4)">
+                  <rect x="-54" y="-13" width="108" height="25" rx="12.5" fill="#1A3526" />
+                  <text y="3" text-anchor="middle" fill="#F7F0DC" font-size="10.5" font-weight="700">Our School</text>
+                </g>
+              </g>
+            </g>
+          </svg>
+          <p class="map-caption">Journeys launching from Yerevan across all of Armenia</p>
+        </div>
+
+        <!-- Right: 3 Photos + 4 Clean Adventure Cards + Closing Strip -->
+        <div class="adventure-right-col">
+          <div class="adventure-photos">
+            <figure class="adv-photo adv-photo-heritage" data-lightbox-src="2e8ac188-cb7a-40bf-8c08-c33739a04db9.jpg" data-lightbox-caption="3-Day Educational Expedition in Mountainous Armenia">
+              <img src="2e8ac188-cb7a-40bf-8c08-c33739a04db9.jpg" alt="Students on mountain trip" />
+              <figcaption>3-Day Expeditions</figcaption>
+            </figure>
+
+            <figure class="adv-photo adv-photo-church" data-lightbox-src="aac9d0f4-221f-4332-9dae-38d5a4942b60.jpg" data-lightbox-caption="Historical & Cultural Armenia — Ancient Heritage">
+              <img src="aac9d0f4-221f-4332-9dae-38d5a4942b60.jpg" alt="Historic Armenian church" />
+              <figcaption>Cultural Heritage</figcaption>
+            </figure>
+
+            <figure class="adv-photo adv-photo-camp" data-lightbox-src="ab882fce-3ebc-4f33-9353-58986c7312ea.jpg" data-lightbox-caption="Highland Outdoor Camp in Armenia">
+              <img src="ab882fce-3ebc-4f33-9353-58986c7312ea.jpg" alt="Highland camp" />
+              <figcaption>Highland Camps</figcaption>
+            </figure>
+          </div>
+
+          <div class="adventure-points">
+            <div class="adv-card adv-card-1">
+              <h4>Historical &amp; Cultural Armenia</h4>
+              <p>Discovering ancient monasteries, villages, and cultural heritage firsthand.</p>
+            </div>
+            <div class="adv-card adv-card-2">
+              <h4>40 km Mandatory Hiking</h4>
+              <p>Every student hikes across diverse mountain trails throughout Armenia.</p>
+            </div>
+            <div class="adv-card adv-card-3">
+              <h4>Technocamp in Arates</h4>
+              <p>Highland camp blending outdoor life with robotics, ecology, and technology.</p>
+            </div>
+            <div class="adv-card adv-card-4">
+              <h4>Countless 3-Day Journeys</h4>
+              <p>Year-round expeditions turning the entire country into an open classroom.</p>
+            </div>
+          </div>
+
+          <div class="finale-strip">
+            <div class="finale-left">
+              <strong>The Sebastatsi Experience</strong>
+              <span>Ruslan Hovsepyan &middot; Samvel Markosyan &middot; Davit Mirakyan</span>
+            </div>
+            <span class="finale-tag">Thank You</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Minimal Bottom Navigation Dock -->
+  <nav class="presenter-dock" aria-label="Presentation Navigation">
+    <button class="dock-btn" id="prevBtn" title="Previous (Left Arrow / PageUp)" aria-label="Previous">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6" />
+      </svg>
+    </button>
+
+    <div class="dock-pills" id="dockPills"></div>
+
+    <button class="dock-btn dock-next" id="nextBtn" title="Next (Right Arrow / PageDown / Space)" aria-label="Next">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6" />
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Photo Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+      <img id="lightboxImg" src="" alt="" />
+      <p id="lightboxCaption"></p>
+    </div>
+  </div>
+
+  <!-- Google Maps API / Demo Key Modal (Never hardcoded!) -->
+  <div class="key-modal" id="gmapsModal" aria-hidden="true">
+    <div class="lightbox-backdrop" id="gmapsModalBackdrop"></div>
+    <div class="key-modal-card">
+      <h3>Google Maps Platform Key</h3>
+      <p>Paste a Google Maps API key or free <a href="https://mapsplatform.google.com/maps-demo-key?utm_campaign=gmp_git_agentskills_v1" target="_blank" rel="noopener">Maps Demo Key</a> to enable Google Maps JavaScript API on Slide 2. Saved locally in your browser.</p>
+      <input type="text" id="gmapsKeyInput" placeholder="AIza..." autocomplete="off" />
+      <div class="key-modal-actions">
+        <button type="button" class="btn-secondary" id="clearGmapsKeyBtn">Reset</button>
+        <button type="button" class="btn-secondary" id="closeGmapsModalBtn">Cancel</button>
+        <button type="button" class="btn-primary" id="saveGmapsKeyBtn">Apply Key</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="app.js"></script>
+</body>
+</html>
