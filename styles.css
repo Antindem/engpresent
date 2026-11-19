@@ -84,11 +84,10 @@ html, body {
 }
 
 .brand-mark img {
-  height: 26px;
+  height: 28px;
   width: auto;
   display: block;
-  clip-path: inset(2px 0 0 0);
-  opacity: 0.92;
+  opacity: 0.96;
 }
 
 .slide-counter {
